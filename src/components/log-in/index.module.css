@@ -1,0 +1,128 @@
+/* Centra todo en la pantalla */
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5; 
+  background-image: url("../images/impera.png");
+  background-position:center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0;
+  font-family: sans-serif;
+  width: 100vw;
+}
+
+/* El cuadro blanco del centro */
+.loginBox {
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Esto pone los elementos uno abajo del otro */
+  gap: 15px;
+  width: 400px;
+  height: 320px;
+}
+
+/* Estilo para los cuadros de texto */
+.loginBox input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box; /* Evita que el input se salga del cuadro */
+}
+
+/* Estilo para el botón */
+.loginBox button {
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+}
+
+.loginBox button:hover {
+  background-color: #0056b3;
+}
+
+
+
+/* Nuevo: Alinea el icono y el input en la misma fila */
+.inputGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre el icono y el cuadro */
+  width: 100%;
+  justify-content:  row;
+}
+
+/* Nuevo: Le da un color gris suave al icono para que combine */
+.icon {
+  color: #666;
+  flex-shrink: 0; /* Evita que el icono se deforme */
+}
+
+
+.loginBox input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  flex-grow: 1; 
+  box-sizing: border-box;
+}
+
+.registerText {
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  margin-top: 10px; 
+}
+
+.registerText a {
+  color: #007bff;
+  text-decoration: none; 
+  font-weight: bold;
+}
+
+
+.registerText a:hover {
+  text-decoration: underline;
+}
+
+.inputErroruser {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+  width: 100%;
+  justify-content:  row;
+  border-color: red;
+
+}
+
+.inputErroruser input {
+  border: 1px solid red !important;
+  background-color: #fff6f6; /* Un fondo rosa muy suave opcional */
+}
+
+.inputErroruser .icon {
+  color: red;
+}
+
+/* ⚠️ NUEVO: Estilo para el texto de advertencia abajo del input */
+.errorMessage {
+  color: red;
+  font-size: 11px;
+  margin-top: -10px; /* Lo pega un poco más hacia arriba al input */
+  margin-left: 30px; /* Lo alinea saltándose el icono */
+  text-align: left;
+}

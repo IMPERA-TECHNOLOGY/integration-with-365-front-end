@@ -1,0 +1,108 @@
+/* Contenedor gris del fondo general */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrado vertical (arriba/abajo) */
+    align-items: center;     /* Centrado horizontal (izquierda/derecha) */
+    gap: 20px;
+    padding: 40px;
+    background-color: #dee4ea;
+    min-height: 100vh;
+    box-sizing: border-box; /* Evita que el padding rompa el tamaño de la pantalla */
+}
+
+/* Tarjeta blanca del perfil */
+.container1 {
+    display: flex;
+    flex-direction: column; 
+    background-color: #ffffff;
+    padding: 32px;
+    border-radius: 12px;
+    gap: 24px; 
+    width: 100%;
+    max-width: 550px;
+    border: 1px solid #47399f; 
+    box-shadow: 0px 4px 12px rgba(64, 85, 191, 0.15), 0px 1px 3px rgba(56, 61, 180, 0.05);
+}
+
+
+/* Alinea el icono de la persona con el título "Perfil de usuario" */
+.headerTarjeta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.headerTarjeta h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+/* Contenedor del formulario completo hacia abajo */
+.formulario {
+    display: flex;
+    flex-direction: column; 
+    gap: 20px; 
+    
+    width: 100%;
+}
+
+/* Caja para juntar cada etiqueta con su respectivo input */
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; 
+    
+}
+
+.campo label {
+    font-size: 0.85rem;
+    color: #4b5563; 
+    
+}
+
+/* Diseño estilizado para los inputs y el select */
+.container1 input,
+.container1 select {
+    width: 100%;
+    height: 38px;
+    
+    padding: 0 12px;
+    border: 1px solid #e2e8f0; 
+    
+    border-radius: 6px;
+    
+    font-size: 0.95rem;
+    color: #1e293b;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    outline: none;
+}
+
+/* Estilo para cuando haces clic en un input */
+.container1 input:focus,
+.container1 select:focus {
+    border-color: #3b82f6; 
+}
+
+/* El botón azul de guardar cambios */
+.container1 button {
+    border-radius: 6px;
+    width: 140px;
+    height: 38px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: white;
+    background-color: #245bdc; 
+    
+    border: none;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background-color 0.2s;
+}
+
+.container1 button:hover {
+    background-color: #1d4ed8; /* Azul un poco más oscuro al pasar el mouse */
+}

@@ -1,0 +1,163 @@
+/* Contenedor principal gris claro de fondo */
+.mainContainer {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+/* Encabezado fuera del cuadro blanco */
+.pageHeader {
+  width: 100%;
+  max-width: 650px;
+  margin-bottom: 24px;
+}
+
+.pageHeader h1 {
+  margin: 0 0 6px 0;
+  font-size: 24px;
+  color: #111827;
+  font-weight: 600;
+}
+
+.pageHeader p {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* El cuadro blanco del formulario */
+.registerBox {
+  background-color: white;
+  width: 100%;
+  max-width: 650px;
+  padding: 32px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+/* Título interno del cuadro */
+.boxTitle {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+/* Grupo vertical: Label arriba, Input abajo */
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.inputGroup label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* Estilo unificado para Inputs y Selects */
+.inputGroup input,
+.inputGroup select {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #1f2937;
+  background-color: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  height: 42px;
+}
+
+.inputGroup input::placeholder {
+  color: #9ca3af;
+}
+
+/* Fila para poner dos columnas lado a lado */
+.row {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+/* Contenedor especial para el icono del ojo en la contraseña */
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.passwordWrapper input {
+  padding-right: 40px; /* Espacio para que el texto no tape el icono */
+}
+
+.eyeButton {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.eyeButton:hover {
+  color: #4b5563;
+}
+
+/* Contenedor de botones alineado a la derecha */
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* Botón Cancelar (Blanco con borde) */
+.cancelButton {
+  padding: 10px 20px;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background-color: #08315a;
+}
+
+/* Botón Registrar (Azul) */
+.submitButton {
+  padding: 10px 20px;
+  background-color: #0052cc; /* Azul corporativo idéntico al de la imagen */
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #0043a4;
+}
