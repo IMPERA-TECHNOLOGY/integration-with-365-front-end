@@ -53,15 +53,16 @@ export const options = {
 export function BarHorizontal() {
 
   const {
-    ticket
+    ticket,
+    apiTickets
   } = useContext(dataContext)
 
   const labels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
   const monthValues = Array(12).fill(0)
 
-  ticket.forEach(it => {
-    const date = new Date(it.dateCreated)
+  apiTickets.forEach(it => {
+    const date = new Date(it.created_at)
     const dateMonth = date.getMonth()
 
     monthValues[dateMonth] += 1

@@ -8,34 +8,42 @@ import { SquareChevronRight } from 'lucide-react';
 
 export function Lista () {
 
-    const  {
-        ticket, 
-        userValue, 
+    const  { 
+        userValue,
         apiTickets,
         setApiTickets
     } = useContext(dataContext);
 
-    const [actualPag, setactualPag] = useState(1)
+
     let clientView; 
-
-    const startPagShown = (actualPag - 1) * 5;
-    const endPagShown = startPagShown + 5; 
-
-    const elementActualPag = ticket.slice(startPagShown, endPagShown)
-    const totalPages = Math.ceil(apiTickets.length / 5); 
 
     const date = apiTickets.created_at
     const newDateFormaT = new Date(date)
 
-    //Aqui es el llamado a la base de datos.
+    //llamado a la base de datos.
         
     useEffect(() => {
         const fetchTickets = async () => {
+            const token = localStorage.getItem("token")
             try {
-                const response = await fetch("http://localhost:4000/tickets");
-                const resultado = await response.json()
+                const response = await fetch("http://localhost:4000/tickets", {
+                    method:"GET",
+                    headers: {"content-type": "application/json",
+                    "authorization": `Bearer ${token}`
+                    }
+                });
 
-                setApiTickets(resultado);
+                if (response.status === 401) {
+                console.log("Token vencido detectado");
+                localStorage.removeItem("token"); 
+                setApiTickets([]);
+                }
+
+                const results = await response.json()
+                setApiTickets(results)
+                console.log(results)
+
+                
             }catch (error) {
                 console.error("error:", error)
             }
@@ -44,7 +52,6 @@ export function Lista () {
     },[])
 
 
-console.log(apiTickets)
 
         // Vista de todos los tickets 
 
@@ -52,19 +59,22 @@ console.log(apiTickets)
 
   clientView = (    
     <tbody>
-        {ticket.toReversed().map((it, index) => {
+        {apiTickets.toReversed().map((it, index) => {
+
             const newDateFormat = new Date(it.created_at).toLocaleDateString()
+            const status = it.status === 1 ? "Closed" : "In progress";
+
             return (
-                <tr className={style.tr2} key={index}>
-                    <td>{it.id}</td>
-                    <td>{it.Description}</td>                  
-                    <td>{it.dateCreated}</td>
-                    <td>{it.reported}</td>
-                    <td>{it.Group}</td>
-                    <td>{it.status}</td>
+                <tr className={style.tr2} key={it.id}>
+                    <td>{it.ticket_number}</td>
+                    <td>{it.subject}</td>                  
+                    <td>{newDateFormat}</td>
+                    <td>{it.contact_name}</td>
+                    <td>{it.company_name}</td>
+                    <td >{status}</td>
                 </tr> 
             );
-        })}             
+        })}    
     </tbody>
 );
 
@@ -76,7 +86,7 @@ console.log(apiTickets)
         clientView = (
         <tbody>
             <tr>
-                <td colSpan="5" style={{ color: "red", textAlign: "center", padding: "20px" }}> 
+                <td colSpan="5" style={{ color: "red", textAlign: "center", padding: "50px" }}> 
                 <h3> Ticket no existe </h3>
                 </td>
             </tr>
@@ -89,30 +99,17 @@ console.log(apiTickets)
     clientView = (
         <>
             <tbody>
-                {userValue.length > 0 ? (
-                    userValue.map((it) => (
-                        <tr key={it.id} className={style.tr2}>
-                            <td>{it.id}</td>
-                            <td>{it.Description}</td>
-                            <td>{it.dateCreated}</td>
-                            <td>{it.reported}</td>
-                            <td>{it.Group}</td>
-                            <td>{it.status}</td>
-                        </tr> 
-                    ))
-                ) : (
-                    <tr className={style.tr2}>
-                        <td>{userValue.id}</td>
-                        <td>{userValue.Description}</td>
-                        <td>{userValue.dateCreated}</td>
-                        <td>{userValue.reported}</td>
-                        <td>{userValue.Group}</td>
+                    <tr key={userValue.ticket_number} className={style.tr2}>
+                        <td>{userValue.ticket_number}</td>
+                        <td>{userValue.subject}</td>
+                        <td>{userValue.created_at}</td>
+                        <td>{userValue.contact_name}</td>
+                        <td>{userValue.company_name}</td>
                         <td>{userValue.status}</td>
-                    </tr>
-                )}                      
+                    </tr>                
             </tbody>
         </>
-    );
+    )
 }
 
      //resultado de la busqueda por numero de ticket // 

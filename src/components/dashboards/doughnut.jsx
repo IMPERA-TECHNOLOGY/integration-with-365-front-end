@@ -25,16 +25,17 @@ export const options = {
 export function DoughnutChart() {
 
   const {
-    ticket
+    ticket,
+    apiTickets
   } = useContext(dataContext)
 
-  const labels = ['ANSA', 'IMPERA', 'CNC', 'bmCargo'];
+  const labels = ['ansa', 'IMPERA', 'CNC', 'bmCargo'];
   const groupValues = Array(labels.length).fill(0)
 
-  if(ticket.length > 0 ) {
-    ticket.forEach(it => {
+  if(apiTickets.length > 0 ) {
+    apiTickets.forEach(it => {
 
-      const index = labels.indexOf(it.Group)
+      const index = labels.indexOf(it.company_name)
 
        if (index !== -1) {
         groupValues[index] += 1;

@@ -10,15 +10,17 @@ import {Config} from "../Config/index.jsx"
 export function Layout({mainList, asideContent}) {
 
 
-        const {
+    const {
         search,
         options,
-        searchStatus
-        
-
+        searchStatus,
+        userInfo,
+        userTest
     } = useContext(dataContext);
 
+
     return (
+        
         
         <div className={styles.main}>
 
@@ -29,16 +31,16 @@ export function Layout({mainList, asideContent}) {
             <div className={styles.contentWrapper}> 
 
                 <header className={styles.header}>
-                    <h4> Ticket Impera App</h4>
-                    <img src= {Impera} alt= "Impera" style={{ width: '150px', height: '100px' }} />
-                    
+                    <h3> Ticket Impera App</h3>
+                    <div className={styles.userBrandGroup}>     
+                        <img src= {Impera} alt= "Impera" style={{ width: '150px', height: '100px' }}  />
+                    </div>    
                 </header>
-
+                        
                 <main className={styles.mainContent}>
                     {options === "mainList" && (
                         <div className={styles.div}>
-                            <input type="text" placeholder="Buscar tickets..." onChange={(event) => search(event)} />
-                            <input type="text" placeholder="Estado..." onChange={(event) =>searchStatus(event)} />
+                            <input type="text" placeholder="Buscar tickets por ID..." onChange={(event) => search(event)} />
                         </div>
                     )}
                     
@@ -61,6 +63,7 @@ export function Layout({mainList, asideContent}) {
             </div>              
         </div>
     )
+
 }
 export default Layout;
 

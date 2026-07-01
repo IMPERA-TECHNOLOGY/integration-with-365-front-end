@@ -13,13 +13,13 @@ export function  Content ({onLogout}) {
         mainContent,
         onTicketsMainContent,
         options,
-        onConfigContent
-        
+        onConfigContent        
     } = useContext(dataContext)
 
      const logout = () => {
         onLogout(); 
     }
+
 
     return (
         <div className = {style.div}>
@@ -33,7 +33,7 @@ export function  Content ({onLogout}) {
                 Tickets
             </h3>
 
-            <h3 onClick={onConfigContent} className= {options === "Config" ? style.selected : ""}>
+            <h3 onClick={onConfigContent} className= {options === "Config" ? style.selected : ""}  >
                 <Settings size={20} syle = {{marginRight: "10" }}/>
                 Configuracion
             </h3>

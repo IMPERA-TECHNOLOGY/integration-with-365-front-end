@@ -1,40 +1,63 @@
 import { User, Lock } from 'lucide-react';
 import style from "./index.module.css"; 
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { dataContext }  from '../context';
 
+
 export function Login({onLogin}) {
+  
+  
 
   const  {
     userNameClient,
-    setUsernameClient,
+    setUserNameClient,
     setPassword,
-    password
-  } = useContext(dataContext)
+    setUserInfo,
+    userInfo,
+    password,
+    setUserToken,
+    UserToken
+    } = useContext(dataContext)
 
-
-  const [userInfo, setUserInfo] = useState(
-        {
-            user: "jean",
-            password: "jean"
-        }
-    );
   const [hasError, setHasError] = useState(false);
 
 
-  const onLoginSuccess = () => {
-    if(userNameClient === userInfo.user && password === userInfo.password ) {
-      onLogin();
-    }else {
-      console.log("usuario o contraseña incorrecto")
-      setHasError(true)
+    //busqueda de login de usuario a la BD
+ const onLoginSuccess = async () => {
+  try {
+    const response = await fetch("http://localhost:4000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        email: userNameClient, 
+        password: password 
+      })
+    });
 
+    const results = await response.json();
+      if (response.status === 204) {
+      return;
     }
-  };
+
+    if (response.ok) {
+      localStorage.setItem("token", results.token)
+      localStorage.setItem("user",JSON.stringify(results.user))
+      localStorage.setItem("id",JSON.stringify(results.user.id))
+      onLogin()
+      console.log(results)
   
+    } else {
+      console.log(results.error);
+      setHasError(true);
+    }
+    
+  }catch (error) {
+    console.error("Error en la conexión:", error);
+    setHasError(true);
+  }
+};
 
-
-
+ // formulario de ingreso a la app
   return (
     <main className={style.mainContainer}>
       <div className={style.loginBox}> 
@@ -43,7 +66,7 @@ export function Login({onLogin}) {
         
         <div className={!hasError ? style.inputGroup : style.inputErroruser} > 
           <User size={20} className={style.icon} />
-          <input type="text" placeholder="Usuario" onChange={(event) => setUsernameClient(event.target.value)} /> 
+          <input type="text" placeholder="Usuario" onChange={(event) => setUserNameClient(event.target.value)} /> 
         </div>
 
         <div className={!hasError ? style.inputGroup : style.inputErroruser} >

@@ -1,7 +1,6 @@
 import { StrictMode, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
-import './index.css'
 import App from './app.jsx'
 import Login from './components/log-in/index.jsx'
 import Register from './components/register/index.jsx'
@@ -22,14 +21,23 @@ function PublicRoute({ isAuthenticated, children }) {
 }
 
 function MainApp() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const token = localStorage.getItem("token")
+    if(token) {
+      return true;
+    }return false
+  });
 
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
         <ProtectedRoute isAuthenticated={isAuthenticated}>
-          <App onLogout={() => setIsAuthenticated(false)} />
+          <App onLogout={() => {
+            setIsAuthenticated(false);
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
+            localStorage,removeItem("id")}}  />
         </ProtectedRoute>
       )
     },
@@ -48,10 +56,6 @@ function MainApp() {
           <Register />
         </PublicRoute>
       )
-    },
-    {
-      path: "*",
-      element: <Navigate to={isAuthenticated ? "/" : "/login"} replace />
     }
   ]);
 

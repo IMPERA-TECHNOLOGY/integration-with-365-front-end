@@ -11,16 +11,17 @@ import { useContext } from "react";
 export function LayoutCards () {
 
         const {
-        ticket
+        ticket,
+        apiTickets
     } = useContext(dataContext)
 
     const status = ["cerrado", "en progreso","activo"]
     const statusValue = Array(status.length).fill(0)
 
-    const totalTicket = ticket.length
+    const totalTicket = apiTickets.length 
 
-    if(ticket.length > 0) {
-    ticket.forEach(it => {
+    if(apiTickets.length > 0) {
+    apiTickets.forEach(it => {
         const index = status.indexOf(it.status)
 
         statusValue[index] += 1;

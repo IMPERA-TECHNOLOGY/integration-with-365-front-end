@@ -3,137 +3,30 @@ import { createContext, useState } from "react";
 export const dataContext = createContext();
 
 export const ContextData = ({ children }) => {
+
+    const [changeEmail, setChangeEmail] = useState()
+
     const [userValue, setUserValue] = useState("");
 
     const [noFoundTicket, setNoFoundTicket] = useState();
 
+    const [userInfo, setUserInfo] = useState()
+
+
 
     //Password del usuario
-const [password, setPassword] = useState()
+    const [password, setPassword] = useState()
 
     // username del usuario
-  const [userNameClient, setUsernameClient] =useState()
+    const [userNameClient, setUserNameClient] =useState()
 
     //Array con todos los tickets desde la BD
     const [apiTickets, setApiTickets] = useState([])
 
 
     //cambio de contenido principal
-    const [options, setOptions] = useState("Dashboard")
+    const [options, setOptions] = useState("mainList")
 
-    //tickets temporales
-    const [ticket, setTicket] = useState([
-        {
-            id: "0",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            group: "ANSA"
-        },
-        {
-            id: "1",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "BmCargo"
-        },
-        {
-            id: "2",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "ANSA"
-        },
-        {
-            id: "3",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "IMPERA"
-        },
-        {
-            id: "4",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "IMPERA"
-        },
-        {
-            id: "4",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "IMPERA"
-        },
-        {
-            id: "4",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "IMPERA"
-        },
-        {
-            id: "4",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "IMPERA"
-        },
-        {
-            id: "4",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "Impera",
-            status: "cerrado"
-        },
-        {
-            id: "4",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "IMPERA",
-            status: "cerrado"
-        },
-        {
-            id: "4",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "IMPERA",
-            status: "cerrado"
-        },
-        {
-            id: "4",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "IMPERA",
-            status: "Cerrado"
-        },
-        {
-            id: "4",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "IMPERA"
-        },
-        {
-            id: "4",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "IMPERA"
-        },
-        {
-            id: "4",
-            Description: "Create user for whole team in sell",
-            dateCreated: "12-2-2026",
-            reported: "Jean",
-            Group: "IMPERA"
-        }
-    ]);
-    
 
     const newTicket = () => {
         setTicket([]);
@@ -152,14 +45,15 @@ const [password, setPassword] = useState()
             return;
         }
 
-        const showValue = ticket.find(it => it.id === value );
+        const showValue = apiTickets.find(it => it.ticket_number === value );
 
         if (showValue === undefined) {
             setUserValue(null);
             console.log("No encontrado");
+            console.log(apiTickets)
         
         } else {
-            console.log(`${showValue.Description}`);
+            console.log(showValue);
             setUserValue(showValue)
         }
     };
@@ -168,7 +62,7 @@ const [password, setPassword] = useState()
     const searchStatus = (event ) => { 
         const value = event.target.value.trim().toLowerCase();
 
-        const showValue = ticket.filter(it => it.status === value)
+        const showValue = apiTickets.filter(it => it.ticket_number === value)
         
 
         if(value.trim() === "" ) {
@@ -193,17 +87,25 @@ const [password, setPassword] = useState()
     }
 
     //cambio a configuraciones
-       const onConfigContent = () => { 
+    const onConfigContent = () => { 
         setOptions("Config")
     }
+
+    // Objeto de registro
+    const [registerUser, setRegisterUser] = useState({
+    completeName:"",
+    email:"",
+    password:"",
+    passwordConfirm:"",
+    rol:"standard user"
+    })
 
 
 
     return (
         <dataContext.Provider
             value={{
-                newTicket,
-                ticket,
+
                 search,
                 userValue,
                 noFoundTicket,
@@ -214,13 +116,16 @@ const [password, setPassword] = useState()
                 apiTickets,
                 setApiTickets,
                 searchStatus,
-                setUsernameClient,
-                userNameClient,
-                setUsernameClient,
+                setUserNameClient,
                 userNameClient,
                 setPassword,
-                password
-                
+                setUserInfo,
+                password,
+                userInfo,
+                registerUser,
+                setRegisterUser,
+                changeEmail,
+                setChangeEmail                
             }}
         >
             {children}

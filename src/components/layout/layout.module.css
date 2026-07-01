@@ -28,26 +28,16 @@
    2. SECCIONES DE LA PANTALLA DERECHA
    ========================================================================== */
 .header {
+    height: 70px;
+    background-color: #f4f6f9;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    height: 60px;
-    background-color: #f4f6f9; 
-    display: flex;
     align-items: center;
-    padding-left: 20px; 
-    font-size: xx-large;
+    padding: 0 20px;
+    border-bottom: 1px solid #ddd;
 }
 
-/* 💡 Arreglo clave: Evitamos que el tamaño de la letra h1 rompa la altura del header */
-.header h1 {
 
-    color: #ffffff;
-    font-size: 10px;
-    margin: 0;
-    line-height: 1; 
-
-}
 
 /* La zona gris que contiene la tarjeta */
 .mainContent {
@@ -132,4 +122,24 @@ body,
 
 h4 {
     font-family:sans-serif
+}
+
+.user {
+    font-family: sans-serif;
+    font-size: 24px;
+    color: #2D2D2D;
+    margin: 0;
+    font-weight: bold;
+}
+
+.userBrandGroup {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.title {
+    color: #2D2D2D;
+    font-size: 22px;
+    margin: 0;
 }
