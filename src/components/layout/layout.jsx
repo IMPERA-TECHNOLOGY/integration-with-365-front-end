@@ -12,10 +12,7 @@ export function Layout({mainList, asideContent}) {
 
     const {
         search,
-        options,
-        searchStatus,
-        userInfo,
-        userTest
+        options
     } = useContext(dataContext);
 
 

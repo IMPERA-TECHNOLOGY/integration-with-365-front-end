@@ -15,23 +15,25 @@ export function LayoutCards () {
         apiTickets
     } = useContext(dataContext)
 
-    const status = ["cerrado", "en progreso","activo"]
-    const statusValue = Array(status.length).fill(0)
+    const statusValue = {
+        "closed" : 0,
+        "inprogress" : 0,
+        "active" : 0
+}
+    const totalTickets = apiTickets.lenght
 
-    const totalTicket = apiTickets.length 
+    apiTickets.forEach( it => {
+        if ( it.status === 1 ) statusValue.closed++;
+        else if(it.status === 2) statusValue.inprogress++;
+        else if(it.status === 3) statusValue.active++;
+    })
 
-    if(apiTickets.length > 0) {
-    apiTickets.forEach(it => {
-        const index = status.indexOf(it.status)
 
-        statusValue[index] += 1;
-        })
-    };
 
     const infoCards = [
         {
             "Titulo": "Total de Tickets",
-            "Cantidad": totalTicket,
+            "Cantidad": totalTickets,
             "Footer": "Todos los Tickets",
             "Icono": (
                 <div style={{ 
@@ -49,7 +51,7 @@ export function LayoutCards () {
         },
         {
             "Titulo": "Pendientes",
-            "Cantidad": "0",
+            "Cantidad": statusValue.active,
             "Footer": "Por resolver",
             "Icono": (
                 <div style={{ 
@@ -68,7 +70,7 @@ export function LayoutCards () {
         },
         {
             "Titulo": "En proceso",
-            "Cantidad": statusValue[1],
+            "Cantidad": statusValue.inprogress,
             "Footer": "En Atencion",
             "Icono": (
                 <div style={{ 
@@ -86,7 +88,7 @@ export function LayoutCards () {
         },
         {
             "Titulo": "Resueltos",
-            "Cantidad": statusValue[0],
+            "Cantidad": statusValue.closed,
             "Footer": "Completados",
             "Icono": (
                 <div style={{ 

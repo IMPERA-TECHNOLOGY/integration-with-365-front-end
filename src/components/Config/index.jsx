@@ -2,45 +2,46 @@ import style from "./class.module.css"
 import { User } from 'lucide-react';
 import { useContext,useEffect, useState } from "react";
 import { dataContext } from "../context";
-import { useNavigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 export function Config () {
-
-    const navigate = useNavigate(); 
-
 
     const userId = JSON.parse(localStorage.getItem("id"))
 
       const [show, setShow] = useState(true);
 
     const {
-        userInfo,
         setUserInfo,
-        onchangeEmail,
         changeEmail,
-        setChangeEmail
+        setChangeEmail,
+        setChangeName,
+        changeName
     } = useContext(dataContext)
+
 
     useEffect(() => {
         const info = localStorage.getItem("user");
         if (info) {
-            setUserInfo(JSON.parse(info)); 
+            
+            setChangeEmail(JSON.parse(info).email)
+            setChangeName(JSON.parse(info).name)
         }
-    }, [setUserInfo]);
+    },[]);
 
 
     const replaceEmail = async () => {
-        const response = await fetch("http://localhost:4000/changeUser", {
+        const response = await fetch(`${API_URL}/register`, {
             method:"POST",
             headers: {"Content-Type": "application/json"},
+            credentials: "include",
             body: JSON.stringify({
                 email: changeEmail,
+                name: changeName,
                 id: userId
             })
-            
         })
 
-        const currentUser = localStorage.getItem("user");
         if(response.ok) {
 
             const currentUser = localStorage.getItem("user");
@@ -48,8 +49,14 @@ export function Config () {
         if(currentUser) {
             const userObj = JSON.parse(currentUser);
             userObj.email = changeEmail
+            userObj.name = changeName
             localStorage.setItem("user", JSON.stringify(userObj));
-            setShow(false);
+
+            setShow(false)
+
+            setTimeout(() => {
+                setShow(true)
+            }, 3000);
         }
         
 
@@ -80,13 +87,13 @@ export function Config () {
                     {/* Name*/}
                     <div className={style.campo}>
                         <label>Nombre</label>
-                        <input type="text" />
+                        <input type="text" onChange={ (event) => setChangeName(event.target.value)} value ={changeName} />
                     </div>
 
                         {/* Email */}
                     <div className={style.campo}>
                         <label>Correo electrónico</label>
-                        <input type="email" onChange={ (event) => setChangeEmail(event.target.value)}/>
+                        <input type="email" onChange={ (event) => setChangeEmail(event.target.value)} value={changeEmail}/>
                     </div>
 
                     {/* Idioma */}
@@ -94,7 +101,6 @@ export function Config () {
                         <label>Idioma</label>
                         <select> 
                             <option>Español</option>
-                            <option>Ingles</option>
                         </select>
                     </div>
 

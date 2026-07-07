@@ -2,6 +2,7 @@ import { User, Lock } from 'lucide-react';
 import style from "./index.module.css"; 
 import { useContext, useEffect, useState } from 'react';
 import { dataContext }  from '../context';
+const API_URL = import.meta.env.VITE_API_URL;
 
 
 export function Login({onLogin}) {
@@ -14,9 +15,7 @@ export function Login({onLogin}) {
     setPassword,
     setUserInfo,
     userInfo,
-    password,
-    setUserToken,
-    UserToken
+    password
     } = useContext(dataContext)
 
   const [hasError, setHasError] = useState(false);
@@ -25,8 +24,9 @@ export function Login({onLogin}) {
     //busqueda de login de usuario a la BD
  const onLoginSuccess = async () => {
   try {
-    const response = await fetch("http://localhost:4000/login", {
+    const response = await fetch(`${API_URL}/login`, {
       method: "POST",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
         email: userNameClient, 
@@ -40,9 +40,8 @@ export function Login({onLogin}) {
     }
 
     if (response.ok) {
-      localStorage.setItem("token", results.token)
       localStorage.setItem("user",JSON.stringify(results.user))
-      localStorage.setItem("id",JSON.stringify(results.user.id))
+
       onLogin()
       console.log(results)
   
@@ -55,6 +54,7 @@ export function Login({onLogin}) {
     console.error("Error en la conexión:", error);
     setHasError(true);
   }
+
 };
 
  // formulario de ingreso a la app

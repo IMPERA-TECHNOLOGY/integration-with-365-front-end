@@ -1,10 +1,18 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+
 
 export const dataContext = createContext();
 
 export const ContextData = ({ children }) => {
 
+    const [isAuthenticated, setIsAuthenticated] = useState(null)
+
+    //cambiar email por configuracion
     const [changeEmail, setChangeEmail] = useState()
+
+    //cambiar nombre por configuracion
+    const [changeName, setChangeName] = useState()
+
 
     const [userValue, setUserValue] = useState("");
 
@@ -27,18 +35,11 @@ export const ContextData = ({ children }) => {
     //cambio de contenido principal
     const [options, setOptions] = useState("mainList")
 
-
-    const newTicket = () => {
-        setTicket([]);
-    };
-
     
     //Function diseñada para la busqueda del usuario
     const search = (event) => {
         const value = event.target.value;
-
         
-
         if(value.trim() === "") {
             setUserValue(undefined)
             console.log("Input vacío");
@@ -57,24 +58,6 @@ export const ContextData = ({ children }) => {
             setUserValue(showValue)
         }
     };
-
-    //Funcion diseñada para la busqueda de estado de los tickets
-    const searchStatus = (event ) => { 
-        const value = event.target.value.trim().toLowerCase();
-
-        const showValue = apiTickets.filter(it => it.ticket_number === value)
-        
-
-        if(value.trim() === "" ) {
-            setUserValue(undefined)
-            return;
-        }else {
-            console.log(`${showValue.Description}`);
-            setUserValue(showValue)
-        }
-        }
-        
-    
 
     //cambio a Dashboard
     const mainContent = () => {    
@@ -115,7 +98,6 @@ export const ContextData = ({ children }) => {
                 onConfigContent,
                 apiTickets,
                 setApiTickets,
-                searchStatus,
                 setUserNameClient,
                 userNameClient,
                 setPassword,
@@ -125,12 +107,17 @@ export const ContextData = ({ children }) => {
                 registerUser,
                 setRegisterUser,
                 changeEmail,
-                setChangeEmail                
+                setChangeEmail,
+                setChangeName,
+                changeName,
+                isAuthenticated,
+                setIsAuthenticated                
             }}
         >
             {children}
         </dataContext.Provider>
     );
-};
+
+}
 
 export default ContextData;

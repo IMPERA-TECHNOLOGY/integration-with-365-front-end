@@ -3,6 +3,8 @@ import { Eye, EyeOff } from 'lucide-react';
 import style from "./register.module.css";
 import { useNavigate } from 'react-router-dom';
 import { dataContext } from '../context';
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 export function Register() {
   const navigate = useNavigate();
@@ -53,7 +55,7 @@ export function Register() {
         return;
 
       }
-      const request = await fetch("http://localHost:4000/register", {
+      const request = await fetch(`${API_URL}/register`, {
         method: "POST",
         headers: { "content-type": "Application/json" },
         body: JSON.stringify({

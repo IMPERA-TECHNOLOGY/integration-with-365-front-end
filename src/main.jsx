@@ -1,10 +1,13 @@
-import { StrictMode, useState } from 'react'
+import { StrictMode, useContext, useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
-import App from './app.jsx'
+import App from './App.jsx'
 import Login from './components/log-in/index.jsx'
 import Register from './components/register/index.jsx'
-import ContextData from './components/context/index.jsx'
+import ContextData, { dataContext } from './components/context/index.jsx'
+import Loading from './components/loading/index.jsx'
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 function ProtectedRoute({ isAuthenticated, children }) {
   if (!isAuthenticated) {
@@ -21,12 +24,39 @@ function PublicRoute({ isAuthenticated, children }) {
 }
 
 function MainApp() {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    const token = localStorage.getItem("token")
-    if(token) {
-      return true;
-    }return false
-  });
+  const {
+    isAuthenticated,
+    setIsAuthenticated
+  } = useContext(dataContext)
+
+  useEffect (() => {
+
+  const auth = async () => {
+
+    try {
+    const response = await fetch(`${API_URL}/auth`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json"
+      },
+      credentials: "include"
+    })
+
+    if (response.ok) {
+      setIsAuthenticated(true)
+    }else {
+      setIsAuthenticated(false)
+    }
+  }catch (error) {
+    console.log(error)
+    setIsAuthenticated(false);
+  }}
+  auth();
+},[])
+
+  if(isAuthenticated === null) {
+    return <Loading></Loading>
+  }
 
   const router = createBrowserRouter([
     {
@@ -36,8 +66,7 @@ function MainApp() {
           <App onLogout={() => {
             setIsAuthenticated(false);
             localStorage.removeItem("user");
-            localStorage.removeItem("token");
-            localStorage,removeItem("id")}}  />
+            localStorage.removeItem("id")}}  />
         </ProtectedRoute>
       )
     },
